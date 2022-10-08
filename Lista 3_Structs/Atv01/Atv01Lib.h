@@ -56,8 +56,6 @@ int filtraNome(tbanda b[], char nomeBusca[100]){
 			printf("Quantidade de Integrantes: %d\n",b[i].integrantes);
 			printf("Ranking da banda: %d\n",b[i].ranking);
 			printf("-------------------------\n");
-			
-			printf("\nFiltro realizado com sucesso :)\n");
 			return i;	
 		}
 	}
@@ -74,16 +72,15 @@ void removeBanda(tbanda b[],char nomeBusca[100]){
 	if(posicao==-1)
 		printf("Banda nao encontrada...\n");
 	
-	printf("Deseja remover a banda ?\n[1]-Sim\n[2]-Nao\nResposta: ");
+	printf("Deseja remover a banda ?\n[1]-Sim\n[2]-Nao\n\nResposta: ");
 	scanf("%d",&res);
 	
 	if(res==1){
-	b[posicao] = b[qtd-1]; //sobrepondo com a ultima banda;
-	printf("\nBanda removida com sucesso :)\n");
-	qtd--;
-	}
-	else{
-		printf("Operacao cancelada... \n");
+		b[posicao] = b[qtd-1]; //sobrepondo com a ultima banda;
+		printf("\nBanda removida com sucesso :)\n");
+		qtd--;
+	}else{
+		printf("\nOperacao cancelada... \n");
 	}
 }
 //REMOVER BANDA
@@ -137,10 +134,10 @@ void carregaArquivo(tbanda bandas[]){
 	if(arq==NULL){
 	  printf("Arquivo nao encontrado :(\n");
 	  return;
-	  }// fim if
-	 while(fread(&bandas[qtd],sizeof(tbanda),1,arq) >0 )
-	      qtd++;  
-	 printf("Dados carregados com sucesso...\n");
+	}// fim if
+	while(fread(&bandas[qtd],sizeof(tbanda),1,arq) >0 )
+		qtd++;  
+	printf("Dados carregados com sucesso...\n");
 	fclose(arq);
 }
 //CARREGAR ARQUIVOS
@@ -151,32 +148,33 @@ void alteraDados(tbanda b[], char nomeBusca[100]){
 	if(filtraNome(b,nomeBusca)==-1)
 		printf("\nBanda nao encontrada :(\n");
 	else{
-	system("cls");
-	i = filtraNome(b,nomeBusca);
-	alter=menuAlter();
+		system("cls");
+		i = filtraNome(b,nomeBusca);
+		alter=menuAlter();
 	
-	if(alter==1){
-		printf("\nEntre com o novo nome: ");
-		fflush(stdin);
-		gets(b[i].nome);
-		printf("\nDado alterado com sucesso :)\n");
-	}else if(alter==2){
-		printf("\nEntre com o novo genero: ");
-		fflush(stdin);
-		gets(b[i].genero);
-		printf("\nDado alterado com sucesso :)\n");
-	}else if(alter==3){
-		printf("\nEntre com a nova quantidade de integrantes: ");
-		fflush(stdin);
-		scanf("%d",&b[i].integrantes);
-		printf("\nDado alterado com sucesso :)\n");
-	}else if(alter==4){
-		printf("\nEntre com o novo ranking da banda: ");
-		scanf("%d",&b[i].ranking);
-		printf("\nDado alterado com sucesso :)\n");
+		if(alter==1){
+			printf("\nEntre com o novo nome: ");
+			fflush(stdin);
+			gets(b[i].nome);
+			printf("\nDado alterado com sucesso :)\n");
+		}else if(alter==2){
+			printf("\nEntre com o novo genero: ");
+			fflush(stdin);
+			gets(b[i].genero);
+			printf("\nDado alterado com sucesso :)\n");
+		}else if(alter==3){
+			printf("\nEntre com a nova quantidade de integrantes: ");
+			fflush(stdin);
+			scanf("%d",&b[i].integrantes);
+			printf("\nDado alterado com sucesso :)\n");
+		}else if(alter==4){
+			printf("\nEntre com o novo ranking da banda: ");
+			scanf("%d",&b[i].ranking);
+			printf("\nDado alterado com sucesso :)\n");
+		}
+	
 	}
-	
-}}
+}
 
 int menuAlter(){
 	int op;
@@ -208,4 +206,3 @@ int menu(){
 	return op;
 }
 //MENU DE ESCOLHAS
-
