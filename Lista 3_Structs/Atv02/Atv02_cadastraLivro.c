@@ -63,6 +63,24 @@ int main(){
 						anoRecente(livros,anoBusca);
 						printf("\nBusca realizada com sucesso :)");}
 					break;
+				case 5: 
+					if(qtd==0){
+							printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+							printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para remover: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						removeAluno(livros,tituloBusca);
+					}
+					break;
+				case 6:
+					printf("\n");
+					salvaArquivo(livros);
+					break;
 				case 0:
 					salvaArquivo(livros);
 					printf("\n\nSaindo...");
@@ -122,6 +140,25 @@ int main(){
 						printf("\n");
 						anoRecente(livros,anoBusca);
 						printf("\nBusca realizada com sucesso :)");}
+					break;
+				case 5: 
+					if(qtd==0){
+							printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+							printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para remover: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						printf("\n");
+						removeAluno(livros,tituloBusca);
+					}
+					break;
+				case 6:
+					printf("\n");
+					salvaArquivo(livros);
 					break;
 				case 0:
 					salvaArquivo(livros);
