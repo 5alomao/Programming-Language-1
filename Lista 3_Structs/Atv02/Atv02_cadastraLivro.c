@@ -31,7 +31,7 @@ int main(){
 					}else{
 						getch();
 						system("cls");
-						printf("\nTitulo para busca: ");
+						printf("Titulo para busca: ");
 						fflush(stdin);
 						gets(tituloBusca);
 						strupr(tituloBusca);
@@ -57,7 +57,7 @@ int main(){
 					}else{
 						getch();
 						system("cls");
-						printf("\nAno minimo: ");
+						printf("Ano minimo: ");
 						scanf("%d",&anoBusca);
 						printf("\n");
 						anoRecente(livros,anoBusca);
@@ -91,7 +91,7 @@ int main(){
 					}else{
 						getch();
 						system("cls");
-						printf("\nTitulo para busca: ");
+						printf("Titulo para busca: ");
 						fflush(stdin);
 						gets(tituloBusca);
 						strupr(tituloBusca);
@@ -117,7 +117,7 @@ int main(){
 					}else{
 						getch();
 						system("cls");
-						printf("\nAno minimo: ");
+						printf("Ano minimo: ");
 						scanf("%d",&anoBusca);
 						printf("\n");
 						anoRecente(livros,anoBusca);
