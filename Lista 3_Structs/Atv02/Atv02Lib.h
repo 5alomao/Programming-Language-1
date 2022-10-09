@@ -1,89 +1,177 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct{
-	char titulo[40];
-	char autor[15];
-	int prateleira;
-	int ano;
-}tlivro;
-qtd=0;
-
-void addLivro(tlivro l[]){
-	printf("\nTitulo: ");
-	fflush(stdin);
-	gets(l[qtd].titulo);
-	printf("Autor: ");
-	fflush(stdin);
-	gets(l[qtd].autor);
-	printf("Prateleira: ");
-	scanf("%d",&l[qtd].prateleira);
-	printf("Ano: ");
-	scanf("%d",&l[qtd].ano);
-	qtd++;
-}
-
-int buscaTitulo(tlivro l[], char tituloBusca[40]){
+#include "Atv02Lib.h"
+int main(){
 	
-	int i;
-	char tituloAux[40];
+	tlivro livros[100];
+	int op,anoBusca,start;
+	char tituloBusca[40];
 	
-	for(i=0;i<qtd;i++){
-		strcpy(tituloAux,l[i].titulo);
-		strupr(tituloAux);
-		if(strcmp(tituloBusca,tituloAux)==0){
-			printf("*** Livro %d ***\n",i+1);
-			printf("Titulo: %s\n",l[i].titulo);
-			printf("Prateleira: %d\n",l[i].prateleira);
-			printf("---------------------\n");
-			return i;			
-		}
+	printf("=-=-= Iniciando Sistema de Livros =-=-=\n\n");
+	printf("Deseja carregar os dados salvos?\n[0]-Nao\n[1]-Sim\n\nResposta: ");
+	scanf("%d",&start);printf("\n");
+	
+	if(start==1){
+		carregaArquivo(livros);
+		printf("\nPrecione qualquer tecla para prosseguir...");
+		getch();
+		system("cls");
+		do{
+			op=menuOp();
+			switch(op){
+				case 1:
+					addLivro(livros);
+					printf("\nCadastro realizado com sucesso :)");
+					break;
+				case 2:
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de buscar por titulo...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para busca: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						printf("\n");
+						buscaTitulo(livros,tituloBusca);
+						printf("\nBusca realizada com sucesso :)");}
+					break;
+				case 3:;
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de listar...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("*** Lista de Livros ***\n\n");
+						listaLivro(livros);
+						printf("\nLivros listados com sucesso :)");}
+					break;
+				case 4:	
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Ano minimo: ");
+						scanf("%d",&anoBusca);
+						printf("\n");
+						anoRecente(livros,anoBusca);
+						printf("\nBusca realizada com sucesso :)");}
+					break;
+				case 5: 
+					if(qtd==0){
+							printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+							printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para remover: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						removeAluno(livros,tituloBusca);
+					}
+					break;
+				case 6:
+					printf("\n");
+					salvaArquivo(livros);
+					break;
+				case 0:
+					salvaArquivo(livros);
+					printf("\n\nSaindo...");
+					break;
+				default:
+					printf("Opcao invalida :(");
+			}
+			getch();
+			system("cls");
+		}while(op!=0);
+	}else if(start==0){
+			printf("\nPrecione qualquer tecla para prosseguir...");
+		getch();
+		system("cls");
+		do{
+			op=menuOp();
+			switch(op){
+				case 1:
+					addLivro(livros);
+					printf("\nCadastro realizado com sucesso :)");
+					break;
+				case 2:
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de buscar por titulo...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para busca: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						printf("\n");
+						buscaTitulo(livros,tituloBusca);
+						printf("\nBusca realizada com sucesso :)");}
+					break;
+				case 3:;
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de listar...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("*** Lista de Livros ***\n\n");
+						listaLivro(livros);
+						printf("\nLivros listados com sucesso :)");}
+					break;
+				case 4:	
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Ano minimo: ");
+						scanf("%d",&anoBusca);
+						printf("\n");
+						anoRecente(livros,anoBusca);
+						printf("\nBusca realizada com sucesso :)");}
+					break;
+				case 5: 
+					if(qtd==0){
+							printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+							printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para remover: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						printf("\n");
+						removeAluno(livros,tituloBusca);
+					}
+					break;
+				case 6:
+					printf("\n");
+					salvaArquivo(livros);
+					break;
+				case 0:
+					salvaArquivo(livros);
+					printf("\nSaindo...");
+					break;
+				default:
+					printf("Opcao invalida :(");
+			}
+			getch();
+			system("cls");
+		}while(op!=0);
+	}else{
+		printf("Opcao invalida :(");
 	}
-	return -1;
+	return 0;
 }
-
-void listaLivro(tlivro l[]){
-	int i;
-	for(i=0;i<qtd;i++){
-		printf("*** Livro %d ***\n",i+1);
-		printf("Titulo: %s\n",l[i].titulo);
-		printf("Autor: %s\n",l[i].autor);
-		printf("Prateleira: %d\n",l[i].prateleira);
-		printf("Ano: %d\n",l[i].ano);
-		printf("-------------------------\n");
-	}
-}
-
-void anoRecente(tlivro l[], int anoBusca){
-	
-	int i;
-	
-	for(i=0;i<qtd;i++){
-		if(anoBusca<l[i].ano){
-			printf("*** Livro %d ***\n",i+1);
-			printf("Titulo: %s\n",l[i].titulo);
-			printf("Autor: %s\n",l[i].autor);
-			printf("Prateleira: %d\n",l[i].prateleira);
-			printf("Ano: %d\n",l[i].ano);
-			printf("-------------------------\n");	
-		}
-	}
-}
-int menuOp(){
-	int op;
-	
-	printf("*** Sistema de Livros ***\n");
-	printf("[1]-Cadastrar novo livro\n");
-	printf("[2]-Buscar por titulo\n");
-	printf("[3]-Listar livros\n");
-	printf("[4]-Buscar por ano\n");
-	printf("[0]-Sair\n");
-	
-	printf("\nEntre com sua escolha: ");
-	scanf("%d",&op);
-	
-	return op;
-}
-
-
