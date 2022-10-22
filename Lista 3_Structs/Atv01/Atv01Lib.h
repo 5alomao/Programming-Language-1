@@ -97,7 +97,10 @@ void filtraGenero(tbanda b[], char generoBusca[40]){
 			printf("Genero da banda: %s\n",b[i].genero);
 			printf("Quantidade de Integrantes: %d\n",b[i].integrantes);
 			printf("Ranking da banda: %d\n",b[i].ranking);
-			printf("-------------------------\n");	
+			printf("-------------------------\n");
+			printf("\nFiltro realizado com sucesso :)\n");
+		}else{
+			printf("Genero nao encontado :(");
 		}
 	}
 }
@@ -113,7 +116,10 @@ void buscaRanking(tbanda b[], int busca){
 			printf("Genero da banda: %s\n",b[i].genero);
 			printf("Quantidade de Integrantes: %d\n",b[i].integrantes);
 			printf("Ranking da banda: %d\n",b[i].ranking);
-			printf("-------------------------\n");	
+			printf("-------------------------\n");
+			printf("\nBusca realizada com sucesso :)\n");
+		}else{
+			printf("Ranking nao encontrado :(");
 		}
 }
 //BUSCAR POR RANKING
@@ -132,7 +138,7 @@ void carregaArquivo(tbanda bandas[]){
 	FILE *arq;
 	arq=fopen("dadosBandas.txt","rb");
 	if(arq==NULL){
-	  printf("Arquivo nao encontrado :(\n");
+	  printf("Arquivo nao encontrado :(\n\nCadastre bandas e salve para gerar o arquivo :)\n");
 	  return;
 	}// fim if
 	while(fread(&bandas[qtd],sizeof(tbanda),1,arq) >0 )
@@ -171,6 +177,8 @@ void alteraDados(tbanda b[], char nomeBusca[100]){
 			printf("\nEntre com o novo ranking da banda: ");
 			scanf("%d",&b[i].ranking);
 			printf("\nDado alterado com sucesso :)\n");
+		}else{
+			printf("\nOpcao invalida :(\n");
 		}
 	
 	}
@@ -188,6 +196,114 @@ int menuAlter(){
 	return op;
 }
 
+void principal(tbanda bandas[]){
+	int  op, rank;
+	char genero[40],nome[100];
+	do{
+			op=menu();
+			printf("\n");
+			switch(op){
+				case 1:
+					getch();
+					system("cls");
+					addBanda(bandas);
+					printf("\nCadastro realizado com sucesso :)\n");
+					break;
+				case 2:
+					if(qtd==0){
+						printf("Nao existem bandas cadastradas :(\nCadestre uma banda antes de listar...\n\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("*** Lista de Bandas ***\n\n");
+						listaBanda(bandas);
+						printf("\nBandas listadas com sucesso :)\n");}
+					break;
+				case 3:
+					if(qtd==0){
+						printf("Nao existem bandas cadastradas :(\nCadestre uma banda antes de buscar por ranking...\n\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Ranking para busca: ");
+						scanf("%d",&rank);
+						printf("\n");
+						buscaRanking(bandas,rank);
+					}
+					break;
+				case 4:
+					if(qtd==0){
+						printf("Nao existem bandas cadastradas :(\nCadestre uma banda antes de filtrar por genero...\n\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Filtro Genero: ");
+						fflush(stdin);
+						gets(genero);
+						strupr(genero);
+						printf("\n");
+						filtraGenero(bandas,genero);}
+					break;
+				case 5:
+					if(qtd==0){
+						printf("Nao existem bandas cadastradas :(\nCadestre uma banda antes de filtrar por nome...\n\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Filtro nome: ");
+						fflush(stdin);
+						gets(nome);
+						strupr(nome);
+						printf("\n");
+						if(filtraNome(bandas,nome)==-1)
+							printf("Banda nao encontrada :(");
+						else
+							printf("\nBusca realizada com sucesso :)\n");
+						}
+					break;
+				case 6:
+					if(qtd==0){
+						printf("Nao existem bandas cadastradas :(\nCadestre uma banda antes de remover...\n\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Nome da banda: ");
+						fflush(stdin);
+						gets(nome);
+						strupr(nome);
+						printf("\n");
+						removeBanda(bandas,nome);}
+					break;
+				case 7:
+					getch();
+					system("cls");
+					printf("Insira o nome da banda: ");
+					fflush(stdin);
+					gets(nome);
+					strupr(nome);
+					alteraDados(bandas,nome);
+					break;
+				case 8:
+					salvaArquivo(bandas);
+					printf("\n");
+					break;
+				case 0:
+					salvaArquivo(bandas);
+					printf("Saindo...\n");
+					break;
+				default: 
+					printf("Opcao Invalida\n");
+			}
+			getch(); // pausa ...
+			system("cls"); // limpa tela ... clear system;
+		}while(op!=0);
+}
+//Codigo Principal
 int menu(){
 	int op;
 	printf("*** Sistema de Bandas ***\n");
