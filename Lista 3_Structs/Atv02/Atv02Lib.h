@@ -67,7 +67,10 @@ void anoRecente(tlivro l[], int anoBusca){
 			printf("Autor: %s\n",l[i].autor);
 			printf("Prateleira: %d\n",l[i].prateleira);
 			printf("Ano: %d\n",l[i].ano);
-			printf("-------------------------\n");	
+			printf("-------------------------\n");
+			printf("\nBusca realizada com sucesso :)");
+		}else{
+			printf("Nao foram encontrados livros :(");
 		}
 	}
 }
@@ -91,7 +94,7 @@ void carregaArquivo(tlivro l[]){
 	}// fim if
 	while(fread(&l[qtd],sizeof(tlivro),1,arq) >0 )
 		qtd++;  
-	printf("\nDados carregados com sucesso...\n");
+	printf("Dados carregados com sucesso...\n");
 	fclose(arq);
 }
 //CARREGAR ARQUIVOS
@@ -118,6 +121,89 @@ void removeAluno(tlivro l[],char tituloBusca[100]){
 }
 //REMOVER BANDA
 
+void principal(tlivro livros[]){
+	int op,anoBusca,start;
+	char tituloBusca[40];
+	do{
+			op=menuOp();
+			switch(op){
+				case 1:
+					addLivro(livros);
+					printf("\nCadastro realizado com sucesso :)");
+					break;
+				case 2:
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de buscar por titulo...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para busca: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						printf("\n");
+						if(buscaTitulo(livros,tituloBusca)==-1)
+							printf("Livro nao encontrado :(");
+						else
+							printf("\nBusca realizada com sucesso :)\n");
+						}
+					break;
+				case 3:;
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de listar...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("*** Lista de Livros ***\n\n");
+						listaLivro(livros);
+						printf("\nLivros listados com sucesso :)");}
+					break;
+				case 4:	
+					if(qtd==0){
+						printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+						printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Ano minimo: ");
+						scanf("%d",&anoBusca);
+						printf("\n");
+						anoRecente(livros,anoBusca);
+					}
+					break;
+				case 5: 
+					if(qtd==0){
+							printf("\nNao existem livros cadastrados :(\nCadastre um livro antes de filtrar por ano...\n\n");
+							printf("\nPressione qualquer tecla para prosseguir...");
+					}else{
+						getch();
+						system("cls");
+						printf("Titulo para remover: ");
+						fflush(stdin);
+						gets(tituloBusca);
+						strupr(tituloBusca);
+						removeAluno(livros,tituloBusca);
+					}
+					break;
+				case 6:
+					printf("\n");
+					salvaArquivo(livros);
+					break;
+				case 0:
+					salvaArquivo(livros);
+					printf("\n\nSaindo...");
+					break;
+				default:
+					printf("Opcao invalida :(");
+			}
+			getch();
+			system("cls");
+		}while(op!=0);
+}
+//Codigo Principal
+
 int menuOp(){
 	int op;
 	
@@ -135,4 +221,5 @@ int menuOp(){
 	
 	return op;
 }
+
 
