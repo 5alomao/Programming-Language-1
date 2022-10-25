@@ -5,27 +5,27 @@
 typedef struct{
 	char matricula[20];
 	char nome[150];
-	float nota1;
-	float nota2;
-	float nota3;
+	float nota[3];
 	float med;
 }taluno;
 
 int qtd=0;
 
 void cadastraAluno(taluno a[]){
+	int y;
+	float soma;
 	printf("Nome: ");
 	fflush(stdin);
 	gets(a[qtd].nome);
 	printf("Matricula: ");
 	fflush(stdin);
 	gets(a[qtd].matricula);
-	printf("Nota [1]: ");
-	scanf("%f",&a[qtd].nota1);
-	printf("Nota [2]: ");
-	scanf("%f",&a[qtd].nota2);
-	printf("Nota [3]: ");
-	scanf("%f",&a[qtd].nota3);
+	for(y=0;y<3;y++){
+	printf("Nota [%d]: ",y+1);
+	scanf("%f",&a[qtd].nota[y]);
+	soma+=a[qtd].nota[y];
+	}
+	a[qtd].med=soma/3;
 	printf("------------------\n\n");
 	printf("Cadastrado com sucesso :)");
 	qtd++;
@@ -34,13 +34,12 @@ void cadastraAluno(taluno a[]){
 void listaAluno(taluno a[]){
 	int i;
 	for(i=0;i<qtd;i++){
-		a[i].med=(a[i].nota1+a[i].nota2+a[i].nota3)/3;
 		printf("*** Aluno %d ***\n",i+1);
 		printf("Nome: %s\n",a[i].nome);
 		printf("Matricula: %s\n",a[i].matricula);
-		printf("Nota [1]: %.1f\n",a[i].nota1);
-		printf("Nota [2]: %.1f\n",a[i].nota2);
-		printf("Nota [3]: %.1f\n",a[i].nota3);
+		printf("Nota [1]: %.1f\n",a[i].nota[0]);
+		printf("Nota [2]: %.1f\n",a[i].nota[1]);
+		printf("Nota [3]: %.1f\n",a[i].nota[2]);
 		printf("Media: %.2f\n",a[i].med);
 		printf("--------------------\n\n");
 	}
@@ -52,16 +51,15 @@ int buscaMatri(taluno a[], char matriculaBusca[20]){
 	char matriculaAux[20];
 	
 	for(i=0;i<qtd;i++){
-		a[i].med=(a[i].nota1+a[i].nota2+a[i].nota3)/3;
 		strcpy(matriculaAux,a[i].matricula);
 		strupr(matriculaAux);
 		if(strcmp(matriculaBusca,matriculaAux)==0){
 			printf("*** Aluno %d ***\n",i+1);
 			printf("Nome: %s\n",a[i].nome);
 			printf("Matricula: %s\n",a[i].matricula);
-			printf("Nota [1]: %.1f\n",a[i].nota1);
-			printf("Nota [2]: %.1f\n",a[i].nota2);
-			printf("Nota [3]: %.1f\n",a[i].nota3);
+			printf("Nota [1]: %.1f\n",a[i].nota[0]);
+			printf("Nota [2]: %.1f\n",a[i].nota[1]);
+			printf("Nota [3]: %.1f\n",a[i].nota[2]);
 			printf("Media: %.2f\n",a[i].med);
 			printf("--------------------\n\n");	
 			return i;
@@ -76,16 +74,15 @@ int buscaNome(taluno a[], char nomeBusca[150]){
 	char nomeAux[150];
 	
 	for(i=0;i<qtd;i++){
-		a[i].med=(a[i].nota1+a[i].nota2+a[i].nota3)/3;
 		strcpy(nomeAux,a[i].nome);
 		strupr(nomeAux);
 		if(strcmp(nomeBusca,nomeAux)==0){
 			printf("*** Aluno %d ***\n",i+1);
 			printf("Nome: %s\n",a[i].nome);
 			printf("Matricula: %s\n",a[i].matricula);
-			printf("Nota [1]: %.1f\n",a[i].nota1);
-			printf("Nota [2]: %.1f\n",a[i].nota2);
-			printf("Nota [3]: %.1f\n",a[i].nota3);
+			printf("Nota [1]: %.1f\n",a[i].nota[0]);
+			printf("Nota [2]: %.1f\n",a[i].nota[1]);
+			printf("Nota [3]: %.1f\n",a[i].nota[2]);
 			printf("Media: %.2f\n",a[i].med);
 			printf("--------------------\n\n");
 			return i;
@@ -121,14 +118,13 @@ void resultado(taluno a[]){
 	
 	int i;
 	for(i=0;i<qtd;i++){
-		a[i].med=(a[i].nota1+a[i].nota2+a[i].nota3)/3;
 		if(a[i].med>=6){
 			printf("*** Aluno %d ***\n",i+1);
 			printf("Nome: %s\n",a[i].nome);
 			printf("Matricula: %s\n",a[i].matricula);
-			printf("Nota [1]: %.1f\n",a[i].nota1);
-			printf("Nota [2]: %.1f\n",a[i].nota2);
-			printf("Nota [3]: %.1f\n",a[i].nota3);
+			printf("Nota [1]: %.1f\n",a[i].nota[0]);
+			printf("Nota [2]: %.1f\n",a[i].nota[1]);
+			printf("Nota [3]: %.1f\n",a[i].nota[2]);
 			printf("Media: %.2f\n",a[i].med);
 			printf("Situacao: Aprovado\n");
 			printf("--------------------\n\n");
@@ -136,34 +132,15 @@ void resultado(taluno a[]){
 			printf("*** Aluno %d ***\n",i+1);
 			printf("Nome: %s\n",a[i].nome);
 			printf("Matricula: %s\n",a[i].matricula);
-			printf("Nota [1]: %.1f\n",a[i].nota1);
-			printf("Nota [2]: %.1f\n",a[i].nota2);
-			printf("Nota [3]: %.1f\n",a[i].nota3);
+			printf("Nota [1]: %.1f\n",a[i].nota[0]);
+			printf("Nota [2]: %.1f\n",a[i].nota[1]);
+			printf("Nota [3]: %.1f\n",a[i].nota[2]);
 			printf("Media: %.2f\n",a[i].med);
 			printf("Situacao: Reprovado\n");
 			printf("--------------------\n\n");
 		}
 			
 }
-}
-void maiorMed(taluno a[]){
-	int i=qtd;
-	float maior;
-	maior=a[i].med;
-	for(i=0;i<qtd;i++){
-		if(a[qtd].med>maior){
-			maior=a[i].med;
-			printf("*** Aluno %d ***\n",i+1);
-			printf("Nome: %s\n",a[i].nome);
-			printf("Matricula: %s\n",a[i].matricula);
-			printf("Nota [1]: %.1f\n",a[i].nota1);		
-			printf("Nota [2]: %.1f\n",a[i].nota2);
-			printf("Nota [3]: %.1f\n",a[i].nota3);
-			printf("Media: %.2f\n",a[i].med);
-			printf("--------------------\n\n");
-		}
-	}
-	
 }
 
 void principal (taluno alunos[]){
