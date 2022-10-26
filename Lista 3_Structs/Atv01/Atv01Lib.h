@@ -25,6 +25,7 @@ void addBanda(tbanda b[]){
 	scanf("%d",&b[qtd].integrantes);
 	printf("Ranking da Banda: ");
 	scanf("%d",&b[qtd].ranking);
+	printf("-------------------------\n");
 	qtd++;
 } 
 //ADICIONAR BANDA
@@ -100,7 +101,7 @@ void filtraGenero(tbanda b[], char generoBusca[40]){
 			printf("-------------------------\n");
 			printf("\nFiltro realizado com sucesso :)\n");
 		}else{
-			printf("Genero nao encontado :(");
+			printf("Genero nao encontado :(\n");
 		}
 	}
 }
@@ -118,8 +119,8 @@ void buscaRanking(tbanda b[], int busca){
 			printf("Ranking da banda: %d\n",b[i].ranking);
 			printf("-------------------------\n");
 			printf("\nBusca realizada com sucesso :)\n");
-		}else{
-			printf("Ranking nao encontrado :(");
+		}else if(busca!=b[i].ranking){
+			printf("Ranking nao encontrado :(\n");
 		}
 }
 //BUSCAR POR RANKING
@@ -206,8 +207,10 @@ void principal(tbanda bandas[]){
 				case 1:
 					getch();
 					system("cls");
+					printf("Preencha os campos a seguir:\n\n");
 					addBanda(bandas);
 					printf("\nCadastro realizado com sucesso :)\n");
+					printf("\nPrecione qualquer tecla para prosseguir...");
 					break;
 				case 2:
 					if(qtd==0){
@@ -218,7 +221,9 @@ void principal(tbanda bandas[]){
 						system("cls");
 						printf("*** Lista de Bandas ***\n\n");
 						listaBanda(bandas);
-						printf("\nBandas listadas com sucesso :)\n");}
+						printf("\nBandas listadas com sucesso :)\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
+						}
 					break;
 				case 3:
 					if(qtd==0){
@@ -231,6 +236,7 @@ void principal(tbanda bandas[]){
 						scanf("%d",&rank);
 						printf("\n");
 						buscaRanking(bandas,rank);
+						printf("\nPrecione qualquer tecla para prosseguir...");
 					}
 					break;
 				case 4:
@@ -245,7 +251,9 @@ void principal(tbanda bandas[]){
 						gets(genero);
 						strupr(genero);
 						printf("\n");
-						filtraGenero(bandas,genero);}
+						filtraGenero(bandas,genero);
+						printf("\nPrecione qualquer tecla para prosseguir...");
+						}
 					break;
 				case 5:
 					if(qtd==0){
@@ -260,9 +268,10 @@ void principal(tbanda bandas[]){
 						strupr(nome);
 						printf("\n");
 						if(filtraNome(bandas,nome)==-1)
-							printf("Banda nao encontrada :(");
+							printf("Banda nao encontrada :(\n");
 						else
 							printf("\nBusca realizada com sucesso :)\n");
+						printf("\nPrecione qualquer tecla para prosseguir...");
 						}
 					break;
 				case 6:
@@ -277,7 +286,9 @@ void principal(tbanda bandas[]){
 						gets(nome);
 						strupr(nome);
 						printf("\n");
-						removeBanda(bandas,nome);}
+						removeBanda(bandas,nome);
+						printf("\nPrecione qualquer tecla para prosseguir...");
+						}
 					break;
 				case 7:
 					getch();
@@ -287,14 +298,15 @@ void principal(tbanda bandas[]){
 					gets(nome);
 					strupr(nome);
 					alteraDados(bandas,nome);
+					printf("\nPrecione qualquer tecla para prosseguir...");
 					break;
 				case 8:
 					salvaArquivo(bandas);
-					printf("\n");
+					printf("\nPrecione qualquer tecla para prosseguir...");
 					break;
 				case 0:
 					salvaArquivo(bandas);
-					printf("Saindo...\n");
+					printf("\nSaindo...\n");
 					break;
 				default: 
 					printf("Opcao Invalida\n");
@@ -319,6 +331,8 @@ int menu(){
 	
 	printf("Entre com sua escolha: ");
 	scanf("%d",&op);
+	if(op!=0 && op!=8)
+		printf("\nPrecione qualquer tecla para prosseguir...");
 	return op;
 }
 //MENU DE ESCOLHAS
